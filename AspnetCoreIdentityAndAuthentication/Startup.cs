@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+
+using AspnetCoreIdentityAndAuthentication.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace AspnetCoreIdentityAndAuthentication
 {
     public class Startup
@@ -32,6 +36,12 @@ namespace AspnetCoreIdentityAndAuthentication
             });
 
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly("AspnetCoreIdentityAndAuthentication"));
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -51,6 +61,7 @@ namespace AspnetCoreIdentityAndAuthentication
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+           
 
             app.UseMvc(routes =>
             {
