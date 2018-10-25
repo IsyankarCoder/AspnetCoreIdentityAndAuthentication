@@ -10,9 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-
+using AspnetCoreIdentityAndAuthentication.Models;
 using AspnetCoreIdentityAndAuthentication.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace AspnetCoreIdentityAndAuthentication
 {
@@ -41,6 +42,10 @@ namespace AspnetCoreIdentityAndAuthentication
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly("AspnetCoreIdentityAndAuthentication"));
             });
+
+            services.AddIdentity<CustomUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
