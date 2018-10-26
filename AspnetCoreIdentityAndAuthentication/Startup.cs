@@ -45,7 +45,8 @@ namespace AspnetCoreIdentityAndAuthentication
 
             services.AddIdentity<CustomUser, IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
-                    .AddDefaultTokenProviders(); //Add Default Token Provider services that are exclusively used to genereate opaque tokens for account operations (like password reset ,email change) and two factor authentication
+                    .AddDefaultTokenProviders(); 
+           //Add Default Token Provider services that are exclusively used to genereate opaque tokens for account operations (like password reset ,email change) and two factor authentication
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -66,7 +67,15 @@ namespace AspnetCoreIdentityAndAuthentication
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-           
+
+            //Authentication
+            //When the user logs in for the first time , this middleware serializes a UserPrincipal
+            //into an encrypted cookie and sends it to the Browser.On subsequent requests ,it reads the cookie
+            //validates the cookie ,recreates the user principal ,and assigns it to the HttpContext.User property
+            //This you can access in your controller property using Request.User
+            app.UseAuthentication();
+
+            //app.UseIdentity -->Deprecated..
 
             app.UseMvc(routes =>
             {

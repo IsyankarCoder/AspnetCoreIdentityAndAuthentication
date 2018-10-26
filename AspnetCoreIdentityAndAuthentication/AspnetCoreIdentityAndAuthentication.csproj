@@ -11,6 +11,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-  </ItemGroup>
+	<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0"/>
+	<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+	<DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  </ItemGroup> 
 
 </Project>
