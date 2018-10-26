@@ -40,6 +40,40 @@ namespace AspnetCoreIdentityAndAuthentication.Controllers
         }
 
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                CustomUser user = new CustomUser { UserName = model.Email, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User Created a new account with password");
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _logger.LogInformation("User Created a new account with password");
+                    return RedirectToLocal(returnUrl);
+                }
+
+                AddErrors(result);
+            }
+            return View(model);
+        }
+
+
+
         #region Helpers
 
         private void AddErrors(IdentityResult result)
