@@ -15,7 +15,7 @@ namespace AspnetCoreIdentityAndAuthentication.Data
             base(options)
         {
              
-
+         
         }
 
 
