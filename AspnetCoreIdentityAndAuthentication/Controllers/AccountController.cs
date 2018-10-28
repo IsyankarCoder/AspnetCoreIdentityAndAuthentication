@@ -8,6 +8,7 @@ using AspnetCoreIdentityAndAuthentication.Models;
 using Microsoft.AspNetCore.Authorization;
 using AspnetCoreIdentityAndAuthentication.Models.AccountViewModels;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication;
 
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -72,7 +73,54 @@ namespace AspnetCoreIdentityAndAuthentication.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(string returnUrl)
+        {
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User Login");
+                    return RedirectToLocal(returnUrl);
+
+                }
+                if (result.IsLockedOut)
+                {
+                    _logger.LogWarning("User Account Locked in");
+                    //RedirectToAction(nameof(Lockout));
+
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
+                    return View(model);
+                }
+
+
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Lockout()
+        {
+            return View();
+        }
 
         #region Helpers
 
