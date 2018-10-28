@@ -21,12 +21,12 @@ namespace AspnetCoreIdentityAndAuthentication.Controllers
 
         private readonly UserManager<CustomUser> _userManager;
         private readonly SignInManager<CustomUser> _signInManager;
-        private readonly ILogger _logger;
+        private readonly ILogger<AccountController> _logger;
 
 
         public AccountController(UserManager<CustomUser> userManager,
                                  SignInManager<CustomUser> signInManager,
-                                 ILogger logger)
+                                 ILogger<AccountController> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -154,5 +154,14 @@ namespace AspnetCoreIdentityAndAuthentication.Controllers
           Singin Manager is responsible for authenticating a user ,i.e signing in and sign out a user.It issues the authentication cookie to the user.
 
          */
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
     }
 }
