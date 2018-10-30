@@ -21,8 +21,9 @@ namespace AspnetCoreIdentityAndAuthentication.Migrations
 
             modelBuilder.Entity("AspnetCoreIdentityAndAuthentication.Models.CustomUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccessFailedCount");
 

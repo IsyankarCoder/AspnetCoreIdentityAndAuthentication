@@ -16,7 +16,7 @@ namespace AspnetCoreIdentityAndAuthentication.Data
             base(options)
         {
 
-
+            Database.Migrate();
         }
 
         public DbSet<Microsoft.AspNetCore.Identity.IdentityUserClaim<string>> IdentityUserClaims { get; set; }

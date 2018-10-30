@@ -13,7 +13,7 @@ namespace AspnetCoreIdentityAndAuthentication.Models
         public string LastName { get; set; }
         public string SocialNum { get; set; }
 
-       // public new int Id { get; set; }
+        public new int Id { get; set; }
         //public override string Id { get => base.Id; set => base.Id = value; }
     }
 

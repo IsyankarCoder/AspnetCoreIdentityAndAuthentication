@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AspnetCoreIdentityAndAuthentication.Migrations
 {
-    public partial class modeldb3 : Migration
+    public partial class usdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,6 @@ namespace AspnetCoreIdentityAndAuthentication.Migrations
                 name: "dbo.User",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(nullable: true),
                     NormalizedUserName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
@@ -29,7 +28,9 @@ namespace AspnetCoreIdentityAndAuthentication.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    SocialNum = table.Column<string>(nullable: true)
+                    SocialNum = table.Column<string>(nullable: true),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
