@@ -43,9 +43,9 @@ namespace AspnetCoreIdentityAndAuthentication
                     b => b.MigrationsAssembly("AspnetCoreIdentityAndAuthentication"));
             });
 
-            services.AddIdentity<CustomUser, IdentityRole>()
+           services.AddIdentity<CustomUser,IdentityRole<string>>()
                     .AddEntityFrameworkStores<ApplicationDbContext>()
-                    .AddDefaultTokenProviders(); 
+                    .AddDefaultTokenProviders();
            //Add Default Token Provider services that are exclusively used to genereate opaque tokens for account operations (like password reset ,email change) and two factor authentication
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

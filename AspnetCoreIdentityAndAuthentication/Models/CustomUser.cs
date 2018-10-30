@@ -16,4 +16,9 @@ namespace AspnetCoreIdentityAndAuthentication.Models
        // public new int Id { get; set; }
         //public override string Id { get => base.Id; set => base.Id = value; }
     }
+
+    public class AuditUser
+    {
+        public int RecordStatus { get; set; }
+    }
 }
